@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React from 'react';
 import meme_aang_cutout from './meme_aang_cutout.png';
 import './App.css';
-import FirstComponent from './FirstComponent';
+// import FirstComponent from './FirstComponent';
 
 function App() {
   return (
