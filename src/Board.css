@@ -13,10 +13,25 @@ ol, ul {
   .status {
     margin-bottom: 10px;
   }
-  
-  .square {
+
+  .white-square {
     background: #fff;
-    border: 1px solid #999;
+    border: 1px solid rgb(39, 42, 48);
+    float: left;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 34px;
+    height: 34px;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: 34px;
+  }
+
+  .black-square {
+    background: rgb(103, 106, 112);
+    border: 1px solid rgb(39, 42, 48);
     float: left;
     font-size: 24px;
     font-weight: bold;

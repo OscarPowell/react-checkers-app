@@ -13,7 +13,7 @@ function App() {
           Chequers App (Beta)
         </p>
       </header>
-      <Board />
+      <Board className="board" size={[8,8]}/>
     </div>
   );
 }
