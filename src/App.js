@@ -1,5 +1,6 @@
 import React from 'react';
 import meme_aang_cutout from './meme_aang_cutout.png';
+import Board from './Board.js';
 import './App.css';
 // import FirstComponent from './FirstComponent';
 
@@ -9,11 +10,10 @@ function App() {
       <header className="App-header">
         <img src={meme_aang_cutout} className="App-logo" alt="logo" />
         <p>
-          Hello Mira
+          Chequers App (Beta)
         </p>
-        
       </header>
-      {/* <FirstComponent displaytext="First Component Data"/> */}
+      <Board />
     </div>
   );
 }
