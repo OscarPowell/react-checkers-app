@@ -1,54 +1,27 @@
+* {
+    box-sizing: border-box;
+}
 
+:root {
+    --cols: 8;
+    --tile-size: 34px;
+}
 
 ol, ul {
     padding-left: 30px;
-  }
+}
   
-  .board-row:after {
-    clear: both;
-    content: "";
-    display: table;
-  }
-  
-  .status {
+.status {
     margin-bottom: 10px;
-  }
+}
 
-  .white-square {
-    background: #fff;
-    border: 1px solid rgb(39, 42, 48);
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-  }
+.square {
+    height: 34px; 
+}
 
-  .black-square {
-    background: rgb(103, 106, 112);
-    border: 1px solid rgb(39, 42, 48);
-    float: left;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 34px;
-    height: 34px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 34px;
-  }
-  
-  .square:focus {
-    outline: none;
-  }
-  
-  .kbd-navigation .square:focus {
-    background: #ddd;
-  }
- 
+.board {
+    display: grid;
+    grid-template-columns: repeat(var(--cols), var(--tile-size));
+    grid-gap: 0;
+    align-self: flex-start;
+}

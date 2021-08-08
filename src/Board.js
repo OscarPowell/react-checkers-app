@@ -25,28 +25,14 @@ export default class Board extends React.Component {
         });
     }
     
-    //render square of index i
-    renderSquare(i) {
-        let colour = i % 2 === 0 ? "white-square" : "black-square"
+    //render square of index i,j
+    renderSquare(i,j) {
         return (
             <Square
             value={this.state.squares[i]}
             onClick={() => this.handleClick(i)}
-            squareType={colour}
+            colour={(i+j) % 2 === 0 ? "white" : "brown"}
             />
-        );
-    }
-
-    //render a row of index j and number of squares x
-    renderRow(j,x) {
-        let row = []
-        for(let i = 0; i < x; i++){
-            row.push(this.renderSquare(i + j*x));
-        }
-        return (
-            <div className="board-row">
-                {row}
-            </div>
         );
     }
 
@@ -54,10 +40,13 @@ export default class Board extends React.Component {
     renderBoard(x,y) {
         let rows = []
         for(let j = 0; j < y; j++){
-            rows.push(this.renderRow(j,x))
+            rows[j] = []
+            for(let i = 0; i < x; i++){
+                rows[j].push(this.renderSquare(i + j*x,j));
+            }
         }
         return(
-            <div>
+            <div className="board">
                 {rows}
             </div>
         );
@@ -85,7 +74,8 @@ export default class Board extends React.Component {
 
 function Square(props){
     return (
-        <button className={props.squareType}
+        <button className="square"
+            style={{background: props.colour}}
             onClick={props.onClick}
             >
             {props.value}
