@@ -4,7 +4,7 @@
 
 :root {
     --cols: 8;
-    --tile-size: 34px;
+    --tile-size: 5vw;
 }
 
 ol, ul {
@@ -16,7 +16,7 @@ ol, ul {
 }
 
 .square {
-    height: 34px; 
+    height: var(--tile-size); 
 }
 
 .board {
@@ -24,4 +24,12 @@ ol, ul {
     grid-template-columns: repeat(var(--cols), var(--tile-size));
     grid-gap: 0;
     align-self: flex-start;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
+.piece {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }

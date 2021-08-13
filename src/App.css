@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -14,18 +14,19 @@
 }
 
 .App-header {
-  background-color: #385692;
+  background-color: #0c1e42;
   min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 5vmin);
   color: white;
 }
 
-.board {
-  align-self: center;
+.Title{
+  padding-top:10vmin;
+  font-family: 'Cinzel';
 }
 
 @keyframes App-logo-spin {
