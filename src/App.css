@@ -15,7 +15,7 @@
 
 .App-header {
   background-color: #0c1e42;
-  min-height: 50vh;
+  min-height: 36vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -25,8 +25,9 @@
 }
 
 .Title{
-  padding-top:10vmin;
-  font-family: 'Cinzel';
+  padding-top: 4vmin;
+  font-family: monospace;
+  text-transform: uppercase;
 }
 
 @keyframes App-logo-spin {

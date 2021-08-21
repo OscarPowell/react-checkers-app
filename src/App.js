@@ -10,7 +10,7 @@ function App() {
       <header className="App-header">
         <img src={piece} className="App-logo" alt="logo" />
         <p className="Title">
-          Chequers App (Beta)
+          Checkers App (Beta)
         </p>
       </header>
       <Board className="game-section" size={[8,8]}/>
