@@ -36,3 +36,19 @@ ol, ul {
     height: 100%;
     object-fit: contain;
 }
+
+.checkers-info {
+    background-color: #0c1e42;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: calc(2vmin);
+    color: white;
+    font-family: monospace;
+  }
+
+  
+.checkers-info-width {
+    width: 70%;
+    text-align: left;
+  }
