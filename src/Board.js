@@ -76,7 +76,7 @@ export default class Board extends React.Component {
             arr[possibleIndex1] = 1;
         } else if(withinRange2 && this.state.squares[possibleIndex2] === 0 && this.state.squares[possibleIndex1] === leapedPieceType){
             arr[possibleIndex2] = 1;
-            let adjIndices = [possibleIndex2]
+            //let adjIndices = [possibleIndex2]
             
         }
         return arr;           
@@ -125,13 +125,13 @@ export default class Board extends React.Component {
                 let oldIndex = this.state.currentSelection[0] + 8*this.state.currentSelection[1];
                 squares[newIndex] = squares[oldIndex]
                 squares[oldIndex] = 0;
-                // movingDirection[newIndex] = (movingDirection[oldIndex] === 1) ? (moving) : -1;
+                // movingDirection[newIndex] = movingDirection[oldIndex];
                 // movingDirection[oldIndex] = 0;
                 this.removeSquare(i,j,squares); //Code to remove the leapfrogged square
                 this.setState({
                     squares: squares,
                     highlightArray: new Array(64).fill(0),
-                    movingDirection: squares,
+                    movingDirection: movingDirection,
                     whiteIsNext: !this.state.whiteIsNext
                 });
             } else {
