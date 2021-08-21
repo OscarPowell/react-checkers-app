@@ -54,36 +54,32 @@ export default class Board extends React.Component {
         }
         switch(i) {
             case 0:
-                arr = this.setHighlightStates(arr,j,right1,right2,isMovingDown);
+                arr = this.setHighlightStates(arr,i,j,right1,right2,true,isMovingDown);
                 break;
             case 7:
-                arr = this.setHighlightStates(arr,j,left1,left2,isMovingDown);
+                arr = this.setHighlightStates(arr,i,j,left1,left2,true,isMovingDown);
                 break;
             default:
-                arr = this.setHighlightStates(arr,j,left1,left2,isMovingDown);
-                arr = this.setHighlightStates(arr,j,right1,right2,isMovingDown);
+                arr = this.setHighlightStates(arr,i,j,left1,left2,true,isMovingDown);
+                arr = this.setHighlightStates(arr,i,j,right1,right2,true,isMovingDown);
         }
         return arr;
     }
          
-    setHighlightStates(arr,j,possibleIndex1,possibleIndex2,isMovingDown) {
-        //if going down (up the array), need to check the bottom of the board edge cases, otherwise check the top ones
-        let isWithinLim1 = null;
-        let isWithinLim2 = null;
+    setHighlightStates(arr,i,j,possibleIndex1,possibleIndex2,jumpOne) {
+        //jumpOne tells us if it is the first jump being called, so it can use recursion.
         let leapedPieceType = this.state.whiteIsNext ? -1 : 1;
-        if(isMovingDown) {
-            isWithinLim1 = j < 7;
-            isWithinLim2 = j < 6;
-        } else {
-            isWithinLim1 = j > 0;
-            isWithinLim2 = j > 1;
-        }
-        if(this.state.squares[possibleIndex1] === 0 && isWithinLim1){
+        const withinRange1 = (possibleIndex1 < 64) && (possibleIndex1 >= 0)
+        const withinRange2 = (possibleIndex2 < 64) && (possibleIndex2 >= 0)
+
+        if(withinRange1 && jumpOne && this.state.squares[possibleIndex1] === 0){
             arr[possibleIndex1] = 1;
-        } else if(this.state.squares[possibleIndex2] === 0 && this.state.squares[possibleIndex1] === leapedPieceType && isWithinLim2){
+        } else if(withinRange2 && this.state.squares[possibleIndex2] === 0 && this.state.squares[possibleIndex1] === leapedPieceType){
             arr[possibleIndex2] = 1;
+            let adjIndices = [possibleIndex2]
+            
         }
-        return arr;
+        return arr;           
     }
 
     //------------------------------------------------------
@@ -95,12 +91,12 @@ export default class Board extends React.Component {
         if(Math.abs(i - oldI) > 1 || Math.abs(j - oldJ) > 1) {
             squares[(i + oldI)/2 + 8*(j + oldJ)/2] = 0;
         }
-    }
+    }ww
 
     handleClick(i,j) {
         const newIndex = i+j*8;
-        const squares = this.state.squares.slice(); //slice() makes a copy so we update squares this way
-        //const movingDirection = movingDirection.slice();
+        const squares = this.state.squares.slice();
+        const movingDirection = this.state.movingDirection.slice();
         const currentVal = squares[newIndex];
         const isWhiteNext = this.state.whiteIsNext;
         //if not highlight mode, handle highlighting. If it is, handle moving the checker piece.
@@ -111,7 +107,6 @@ export default class Board extends React.Component {
                 return;
             } else if((currentVal === 1 && isWhiteNext) || (currentVal === -1 && !isWhiteNext)) {
                 //handle highlighting by creating an array with the highlighted positions. Put in a function to check which squares should be highlighted.
-                console.log("Correct Square");
                 let highlightArray = this.highlightSquares(i,j);
                 this.setState({
                     highlightMode: true,
@@ -126,10 +121,12 @@ export default class Board extends React.Component {
             //right now the movingSquare matrix is just equal to the squares one.
             if(this.state.highlightArray[newIndex] === 1){
                 //set old square to empty and move to other square (depends on which turn it is)
-                //then reset highlight array
+                //then reset highlight array. Do the same for movingDirection list
                 let oldIndex = this.state.currentSelection[0] + 8*this.state.currentSelection[1];
-                squares[newIndex] = (squares[oldIndex] === 1) ? 1 : -1;
+                squares[newIndex] = squares[oldIndex]
                 squares[oldIndex] = 0;
+                // movingDirection[newIndex] = (movingDirection[oldIndex] === 1) ? (moving) : -1;
+                // movingDirection[oldIndex] = 0;
                 this.removeSquare(i,j,squares); //Code to remove the leapfrogged square
                 this.setState({
                     squares: squares,
