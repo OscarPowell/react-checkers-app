@@ -40,6 +40,7 @@ export default class Board extends React.Component {
         let right1 = null;
         let right2 = null;
         let isMovingDown = this.state.movingDirection[oneDIndex] === 1;
+        console.log(this.state.movingDirection)
         if(isMovingDown) {
             //note still have problems if the piece reaches the end of the board.
             left1 = i-1+(j+1)*8;
@@ -53,6 +54,7 @@ export default class Board extends React.Component {
             right2 = i+2+(j-2)*8;
         }
         switch(i) {
+            //edges can't move beyond edge
             case 0:
                 arr = this.setHighlightStates(arr,i,j,right1,right2,true,isMovingDown);
                 break;
@@ -66,9 +68,12 @@ export default class Board extends React.Component {
         return arr;
     }
          
-    setHighlightStates(arr,i,j,possibleIndex1,possibleIndex2,jumpOne) {
+    setHighlightStates(arr,i,j,possibleIndex1,possibleIndex2,jumpOne,isMovingDown) {
         //jumpOne tells us if it is the first jump being called, so it can use recursion.
         let leapedPieceType = this.state.whiteIsNext ? -1 : 1;
+
+        //add functionality - Tiles on i=6 or i=1 can't leapfrog pieces on edge.
+        //then add double leapfrog
         const withinRange1 = (possibleIndex1 < 64) && (possibleIndex1 >= 0)
         const withinRange2 = (possibleIndex2 < 64) && (possibleIndex2 >= 0)
 
@@ -76,6 +81,9 @@ export default class Board extends React.Component {
             arr[possibleIndex1] = 1;
         } else if(withinRange2 && this.state.squares[possibleIndex2] === 0 && this.state.squares[possibleIndex1] === leapedPieceType){
             arr[possibleIndex2] = 1;
+            //Check if next possible indices are within range before recursion to prevent infinite recursion
+            //If they are, call highlightSquares again with new i and j as the new square moving in the same direction.
+            //have to set the new square movingDirection as the same as the current one
             //let adjIndices = [possibleIndex2]
             
         }
@@ -91,7 +99,7 @@ export default class Board extends React.Component {
         if(Math.abs(i - oldI) > 1 || Math.abs(j - oldJ) > 1) {
             squares[(i + oldI)/2 + 8*(j + oldJ)/2] = 0;
         }
-    }ww
+    }
 
     handleClick(i,j) {
         const newIndex = i+j*8;
@@ -106,7 +114,7 @@ export default class Board extends React.Component {
                 console.log("winner detected")
                 return;
             } else if((currentVal === 1 && isWhiteNext) || (currentVal === -1 && !isWhiteNext)) {
-                //handle highlighting by creating an array with the highlighted positions. Put in a function to check which squares should be highlighted.
+                //handle highlighting by creating an array with the highlighted positions.
                 let highlightArray = this.highlightSquares(i,j);
                 this.setState({
                     highlightMode: true,
@@ -125,8 +133,8 @@ export default class Board extends React.Component {
                 let oldIndex = this.state.currentSelection[0] + 8*this.state.currentSelection[1];
                 squares[newIndex] = squares[oldIndex]
                 squares[oldIndex] = 0;
-                // movingDirection[newIndex] = movingDirection[oldIndex];
-                // movingDirection[oldIndex] = 0;
+                movingDirection[newIndex] = movingDirection[oldIndex];
+                movingDirection[oldIndex] = 0;
                 this.removeSquare(i,j,squares); //Code to remove the leapfrogged square
                 this.setState({
                     squares: squares,
