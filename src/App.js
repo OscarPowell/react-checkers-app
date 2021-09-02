@@ -1,8 +1,7 @@
 import React from 'react';
 import piece from './white_piece.png';
-import Board from './Board.js';
-import './App.css';
-// import FirstComponent from './FirstComponent';
+import Game from './Game.js';
+import './App.css'; 
 
 export default class App extends React.Component{
   render() {
@@ -14,7 +13,7 @@ export default class App extends React.Component{
             Checkers App (Beta)
           </p>
         </header>
-        <Board className="game-section" size={[8,8]}/>
+        <Game className="game"/>
       </div>
     )
   }

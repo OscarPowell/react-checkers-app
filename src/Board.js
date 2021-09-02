@@ -1,9 +1,8 @@
-// import { extend } from 'jquery';
 import React from 'react';
 import './Board.css';
 import red_piece from './red_piece.png';
 import white_piece from './white_piece.png';
-
+import { Button, Box } from '@chakra-ui/react';
 
 export default class Board extends React.Component {
     
@@ -95,13 +94,11 @@ export default class Board extends React.Component {
             //If they are, call highlightSquares again with new i and j as the new square moving in the same direction, the next one along.
             //have to update movingDirection otherwise highlightSquares gets confused when called again.
             //Effectively using a tree traversal recursively starting down the left branch.
-            let newILeft  = null;
-            let newIRight = null;
             let newJ      = null;
+            let newILeft  = newI2-2;
+            let newIRight = newI2+2;
             switch(thisMovingDir){
                 case(1): //moving down (white)
-                    newILeft = newI2-2;
-                    newIRight = newI2+2;
                     newJ = newJ2+2;
                     if(newJ < 8) {
                         if(newILeft >= 0 && this.state.movingDirection[newILeft + newJ*8] === 0){
@@ -115,8 +112,6 @@ export default class Board extends React.Component {
                     }
                     break;
                 case(-1): //moving up (red)
-                    newILeft = newI2-2;
-                    newIRight = newI2+2;
                     newJ = newJ2-2;
                     if(newJ >= 0){
                         if(newILeft >= 0 && this.state.movingDirection[newILeft + newJ*8] === 0){
@@ -129,7 +124,30 @@ export default class Board extends React.Component {
                         }
                     }
                     break;
-                //case(2): //can move either way (kinged piece)
+                case(2): //can move either way (kinged piece)
+                    newJ = newJ2+2;
+                    if(newJ < 8) {
+                        if(newILeft >= 0 && this.state.movingDirection[newILeft + newJ*8] === 0){
+                            movingDirection[newI2+8*newJ2] = thisMovingDir;
+                            arr = this.highlightSquares(arr,newI2,newJ2,false,movingDirection,removeSquares);
+                        }
+                        if(newIRight < 8 && this.state.movingDirection[newIRight + newJ*8] === 0){
+                            movingDirection[newI2+8*newJ2] = thisMovingDir;
+                            arr = this.highlightSquares(arr,newI2,newJ2,false,movingDirection,removeSquares);
+                        }
+                    }
+                    newJ = newJ2-2;
+                    if(newJ >= 0){
+                        if(newILeft >= 0 && this.state.movingDirection[newILeft + newJ*8] === 0){
+                            movingDirection[newI2+8*newJ2] = thisMovingDir;
+                            arr = this.highlightSquares(arr,newI2,newJ2,false,movingDirection,removeSquares);
+                        }
+                        if(newIRight < 8 && this.state.movingDirection[newIRight + newJ*8] === 0){
+                            movingDirection[newI2+8*newJ2] = thisMovingDir;
+                            arr = this.highlightSquares(arr,newI2,newJ2,false,movingDirection,removeSquares);
+                        }
+                    }
+                    break;
                 default:
             }
         }
@@ -185,11 +203,17 @@ export default class Board extends React.Component {
             //right now the movingSquare matrix is just equal to the squares one.
             if(this.state.highlightArray[newIndex] === 1){
                 //set old square to empty and move to other square (depends on which turn it is)
-                //then reset highlight array. Do the same for movingDirection list
+                //then reset highlight array.
                 let oldIndex = this.state.currentSelection[0] + 8*this.state.currentSelection[1];
                 squares[newIndex] = squares[oldIndex]
                 squares[oldIndex] = 0;
-                movingDirection[newIndex] = movingDirection[oldIndex];
+                //Do the same for movingDirection list except if it reaches the end, change to kinged piece
+                if((movingDirection[oldIndex] === 1 && j === 7 )|| (movingDirection[oldIndex] === -1 && j === 0)) {
+                    movingDirection[newIndex] = 2;
+                } else {
+                    movingDirection[newIndex] = movingDirection[oldIndex];
+
+                }
                 movingDirection[oldIndex] = 0;
                 //remove the leapfrogged squares. removeSquares state contains the oneD indices of squares that were leapfrogged to get to each position
                 this.removeSquare(i,j,squares,this.state.removeSquares);
@@ -283,23 +307,27 @@ export default class Board extends React.Component {
 //Empty square
 function Square(props){
     return (
-        <button className="square"
+        <Button className="square"
             style={{background: props.colour}}
             onClick={props.onClick}
+            px="0px"
+            mx="0px"
             >
-        </button>
+        </Button>
     );
 }
 
 //Square with a piece in it
 function PSquare(props){
     return (
-        <button className="square"
+        <Button className="square"
             style={{background: props.colour}}
             onClick={props.onClick}
+            px="0px"
+            mx="0px"
             >
             <img className="piece" src={props.piece_image} alt="piece"/>
-        </button>
+        </Button>
     );
 }
 
