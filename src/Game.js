@@ -1,5 +1,6 @@
 import React from 'react';
-import Board from './Board.js';
+import CheckersBoard from './CheckersBoard.js';
+import ChessBoard from './ChessBoard.js';
 import './Game.css';
 import { Stack, Center, Button } from "@chakra-ui/react"
 
@@ -38,6 +39,9 @@ export default class Game extends React.Component {
             case 0:
                 newWindowState = 1;
                 break;
+            case 1:
+                newWindowState = 2;
+                break;
             default:
 
         }
@@ -59,7 +63,11 @@ export default class Game extends React.Component {
                 );
             case 1:
                 return (
-                    <Board className="game-section" size={[8,8]}/>
+                    <CheckersBoard className="game-section" size={[8,8]}/>
+                );
+            case 2:
+                return (
+                    <ChessBoard className="game-section" size={[8,8]}/>
                 );
             default:
         }
