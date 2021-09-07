@@ -9,8 +9,8 @@ export default class Board extends React.Component {
     constructor(props) {
         super(props);
 
-        const initialBoard =   [1,  0,  0,  0,  0,  0,  1,  0,
-                                0,  1,  0,  -1,  0,  1,  0,  1, 
+        const initialBoard =   [1,  0,  0,  0,  1,  0,  1,  0,
+                                0,  1,  0,  1,  0,  1,  0,  1, 
                                 1,  0,  1,  0,  1,  0,  1,  0,
                                 0,  0,  0,  0,  0,  0,  0,  0,
                                 0,  0,  0,  0,  0,  0,  0,  0,
@@ -36,9 +36,7 @@ export default class Board extends React.Component {
         const oneDIndex = i + j*8;
         //initial check that this square is eligible for a highlight squares check.
         //setHighlightStates will call this method on squares if it sees the correct adjacent square, so this is necessary to skip this function if called on the wrong piece.
-        console.log("tried to call highlightSquares on i =" + i + " j = " + j);
         if((jumpOne && ((this.state.whiteIsNext && this.state.squares[oneDIndex] === 1) || (!this.state.whiteIsNext && this.state.squares[oneDIndex] === -1))) || (!jumpOne && this.state.squares[oneDIndex] === 0) ) {
-            console.log("highlightSquares working on i =" + i + " j = " + j);
             //indices contains the possible locations for next move on left and right side, up or down.
             let indices = null;
             let downIndices =  [i-1,j+1,i-2,j+2,i+1,j+1,i+2,j+2];

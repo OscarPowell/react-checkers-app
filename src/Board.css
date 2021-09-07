@@ -18,10 +18,6 @@ ol, ul {
     text-transform: uppercase;
 }
 
-.square {
-    height: var(--tile-size); 
-}
-
 .board {
     display: grid;
     grid-template-columns: repeat(var(--cols), var(--tile-size));
