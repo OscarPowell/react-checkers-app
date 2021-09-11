@@ -1,3 +1,4 @@
+/* Applies to both Checkers and Chess boards */
 * {
     box-sizing: border-box;
 }
@@ -25,6 +26,13 @@ ol, ul {
     align-self: flex-start;
     justify-content: center;
     padding-bottom: 100px;
+}
+
+.square {
+    border-top: 1px solid #8d8d8d;
+    border-left: 1px solid #8d8d8d;
+    border-right: 1px solid #8d8d8d;
+    border-bottom: 1px solid #8d8d8d;
 }
 
 .piece {

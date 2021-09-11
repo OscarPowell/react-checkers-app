@@ -10,7 +10,7 @@ export default class App extends React.Component{
         <header className="App-header">
           <img src={piece} className="App-logo" alt="logo" />
           <p className="Title">
-            Checkers App (Beta)
+            Play Game - O. Powell(Beta)
           </p>
         </header>
         <Game className="game"/>

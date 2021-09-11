@@ -9,7 +9,7 @@ export default class Board extends React.Component {
     constructor(props) {
         super(props);
 
-        const initialBoard =   [1,  0,  0,  0,  1,  0,  1,  0,
+        const initialBoard =   [1,  0,  1,  0,  1,  0,  1,  0,
                                 0,  1,  0,  1,  0,  1,  0,  1, 
                                 1,  0,  1,  0,  1,  0,  1,  0,
                                 0,  0,  0,  0,  0,  0,  0,  0,
@@ -245,7 +245,7 @@ export default class Board extends React.Component {
         const currentVal = squares[newIndex];
         const isWhiteNext = this.state.whiteIsNext;
         //if not highlight mode, handle highlighting. If it is, handle moving the checker piece.
-        if(!this.state.highlightMode) {
+        if(!this.state.highlightMode || (this.state.highlightMode && this.state.highlightArray[newIndex] === 0 && this.state.squares[newIndex] !== 0)) {
 
             if(calculateWinner(squares,true,true) || currentVal === 0) {
                 console.log("winner detected")
@@ -381,6 +381,7 @@ function Square(props){
             onClick={props.onClick}
             px="0px"
             mx="0px"
+            height="5vw"
             >
         </Button>
     );
@@ -394,6 +395,7 @@ function PSquare(props){
             onClick={props.onClick}
             px="0px"
             mx="0px"
+            height="5vw"
             >
             <img className="piece" src={props.piece_image} alt="piece"/>
         </Button>

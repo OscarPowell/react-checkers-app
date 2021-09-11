@@ -1,0 +1,5 @@
+/* Specific to chess only */
+.piece {
+    height: 4.5vw;
+    /* colour: #793131; */
+}
